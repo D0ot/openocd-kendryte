@@ -162,7 +162,6 @@ typedef enum slot {
 
 #define DRAM_CACHE_SIZE		16
 
-extern debug_info_t debug_info;
 
 struct trigger {
 	uint64_t address;

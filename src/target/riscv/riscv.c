@@ -1282,6 +1282,23 @@ COMMAND_HANDLER(riscv_set_expose_csrs)
 	return ERROR_OK;
 }
 
+COMMAND_HANDLER(riscv_set_current_hart)
+{
+	if (CMD_ARGC != 1) {
+		LOG_ERROR("Command takes exactly 1 parameter");
+		return ERROR_COMMAND_SYNTAX_ERROR;
+	}
+	int hartid;
+	int result = sscanf(CMD_ARGV[0], "%d", &hartid);
+	if (result != (int) strlen(CMD_ARGV[0])) {
+		LOG_ERROR("%s is not a valid value for command.", CMD_ARGV[0]);
+		return ERROR_FAIL;
+	}
+	LOG_INFO("current hart was set to : %d", hartid);
+	return ERROR_OK;
+
+}
+
 static const struct command_registration riscv_exec_command_handlers[] = {
 	{
 		.name = "set_command_timeout_sec",
@@ -1312,6 +1329,13 @@ static const struct command_registration riscv_exec_command_handlers[] = {
 		.help = "Configure a list of inclusive ranges for CSRs to expose in "
 				"addition to the standard ones. This must be executed before "
 				"`init`."
+	},
+	{
+		.name = "set_current_hart",
+		.handler = riscv_set_current_hart,
+		.mode = COMMAND_ANY,
+		.usage = "riscv set_current_hart [hartid]",
+		.help = "Specify which hart to control. It is a workaround for Kendryte K210 chip."
 	},
 	COMMAND_REGISTRATION_DONE
 };

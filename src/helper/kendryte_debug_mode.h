@@ -13,6 +13,9 @@ typedef struct debuginfo
 	int debug_hartid;
 }debug_info_t;
 
+
+extern debug_info_t debug_info;
+
 void set_debug_info(int mode, int hartid);
 
 

@@ -42,7 +42,6 @@
 #endif
 
 #include "kendryte_debug_mode.h"
-extern debug_info_t debug_info;
 
 static int help_flag, version_flag;
 
