@@ -1341,7 +1341,7 @@ static int riscv011_halt(struct target* target)
 	test(target);
 	int another_hart = 1 - debug_info.debug_hartid;
 
-    if (!is_wfi(target, another_hart))
+    /*if (!is_wfi(target, another_hart))
     {
         riscv011_select_hart(target, another_hart);
         if (riscv011_halt_current_hart(target) != ERROR_OK)
@@ -1350,7 +1350,7 @@ static int riscv011_halt(struct target* target)
             return ERROR_FAIL;
         }
         handle_halt(target, true);
-    }
+    }*/
 
     if (!is_wfi(target, debug_info.debug_hartid))
     {
@@ -1747,6 +1747,7 @@ static int strict_step(struct target *target, bool announce)
 static int step(struct target *target, int current, target_addr_t address,
 		int handle_breakpoints)
 {
+	LOG_WARNING("riscv011->step was called, unexpected execution path");
 	riscv011_info_t *info = get_info(target);
 
 	jtag_add_ir_scan(target->tap, &select_dbus, TAP_IDLE);
